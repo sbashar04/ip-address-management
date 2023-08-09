@@ -1,0 +1,78 @@
+version: '3'
+services:
+  # PHP Service
+  server:
+    build:
+      context: .
+      dockerfile: ./server/DockerFile
+    container_name: "ipam_server"
+    environment:
+      SERVICE_NAME: server
+    working_dir: /var/www/server
+    volumes:
+      - ./server/:/var/www/server
+    networks:
+      - private
+
+  # Frontend Service
+  client:
+    build:
+      context: .
+      dockerfile: ./client/DockerFile
+    container_name: "ipam_client"
+    working_dir: /var/www/client
+    volumes:
+      - ./client/:/var/www/client
+    ports:
+      - '4200:4200'
+    command: >
+        bash -c "npm install && ng serve --host 0.0.0.0 --port 4200"
+    networks:
+      - private
+
+  # Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: "ipam_webserver"
+    ports:
+      - "8000:80"
+      - "443:443"
+    volumes:
+      - ./server/:/var/www/server
+    networks:
+      - private
+
+  # MySQL Service
+  mysql:
+    image: mysql:latest
+    container_name: "ipam_mysql"
+    tty: true
+    environment:
+      MYSQL_USER: ${USER_MYSQL}
+      MYSQL_PASSWORD: ${PASS_MYSQL}
+      MYSQL_DATABASE: ${MYSQL_DB}
+      MYSQL_ROOT_PASSWORD: ${PASS_ROOT_MYSQL}
+      MYSQL_ROOT_HOST: '%'
+      SERVICE_NAME: mysql
+    volumes:
+      - ./docker/mysql/dbdata/:/var/lib/mysql-files/
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - private
+
+  # PHPMYADMIN Service
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: "${PROJECT_NAME}_phpmyadmin"
+    ports:
+      - "7000:80"
+    links:
+      - mysql:mysql
+    environment:
+      MYSQL_USER: ${USER_MYSQL}
+      MYSQL_PASSWORD: ${PASS_MYSQL}
+      MYSQL_ROOT_PASSWORD: ${PASS_ROOT_MYSQL}
+      MYSQL_ROOT_HOST: '%'
+      PMA_HOST: mysql
+    networks:
+      - private

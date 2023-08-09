@@ -32,10 +32,7 @@
             "styles": [
               "src/assets/plugins/bootstrap/css/bootstrap.min.css",
               "src/assets/plugins/font-awesome/css/font-awesome.min.css",
-              "src/assets/plugins/simple-line-icons/css/simple-line-icons.css",
               "src/assets/plugins/ionicons/css/ionicons.css",
-              "src/assets/plugins/toastr/toastr.min.css",
-              "src/assets/plugins/morris/morris.min.css",
               "src/assets/css/skin/skin-wet-asphalt.css",
               "src/assets/css/app.min.css",
               "src/assets/css/style.css",
@@ -46,12 +43,6 @@
               "src/assets/plugins/jquery-ui/jquery-ui.js",
               "src/assets/plugins/popper/popper.js",
               "src/assets/plugins/bootstrap/js/bootstrap.min.js",
-              "src/assets/plugins/pace/pace.min.js",
-              "src/assets/plugins/toastr/toastr.min.js",
-              "src/assets/plugins/morris/morris.min.js",
-              "src/assets/plugins/morris/raphael.min.js",
-              "src/assets/js/jquery.slimscroll.min.js",
-              "src/assets/js/highlight.min.js",
               "src/assets/js/custom.js"
             ]
           },
