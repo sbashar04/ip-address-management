@@ -1,9 +1,8 @@
-FROM node:latest
-
-RUN mkdir /usr/src/app && mkdir /usr/src/app/frontend
-
-WORKDIR /usr/src/app/frontend
-
+FROM node:18.17.0-alpine
 RUN npm install -g @angular/cli
-
-COPY . .
+RUN mkdir -p /app
+WORKDIR /app
+COPY package.json /app
+RUN npm install
+COPY . /app
+# RUN npm run build
