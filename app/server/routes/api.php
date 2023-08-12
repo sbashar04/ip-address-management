@@ -29,6 +29,8 @@ Route::group(['prefix' => '/auth'], function(){
     Route::post('/register', [AuthController::class, 'register']);
 });
 
-Route::apiResources([
-    'ip-address' => IpAddressController::class
-]);
+Route::group(['middleware' => ['auth:api']], function(){
+    Route::apiResources([
+        'ip-address' => IpAddressController::class
+    ]);
+});

@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('ip_addresses', function (Blueprint $table) {
             $table->id();
-            $table->string('ip');
+            $table->string('ip_address')->unique();
             $table->string('label');
             $table->foreignIdFor(User::class);
             $table->timestamps();
