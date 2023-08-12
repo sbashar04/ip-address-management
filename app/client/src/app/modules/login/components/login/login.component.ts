@@ -31,10 +31,15 @@ export class LoginComponent implements OnDestroy {
       password: ['', [Validators.required]],
       remember: [false],
     });
+
+    if(this.authService.getToken() !== null) {
+      this.router.navigate(['/']);
+    }
+
   }
 
   handleLoginFormSubmission () {
-    console.log(this.form.errors);
+    this.errors = null;
     this.submitting = true;
 
     if(this.form.valid) {

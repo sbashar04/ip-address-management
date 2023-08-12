@@ -4,6 +4,8 @@ import { IpAddressListComponent } from './components/ip-address-list/ip-address-
 import { IpAddressCreateComponent } from './components/ip-address-create/ip-address-create.component';
 import { IpAddressEditComponent } from './components/ip-address-edit/ip-address-edit.component';
 import { RouterModule, Routes } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormErrorComponent } from 'src/app/components/form-error/form-error.component';
 
 const routes: Routes = [
   {
@@ -32,6 +34,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    ReactiveFormsModule,
+    FormErrorComponent,
   ]
 })
 export class IpAddressModule { }

@@ -5411,7 +5411,7 @@ input,
 	font-size: 13px;
 	border-radius: 3px;
 	box-shadow: none;
-	border: 1px solid rgba(0, 0, 0, 0.07);
+	border: 1px solid rgb(111 111 111 / 58%);
 	transition-duration: .5s;
 }
 

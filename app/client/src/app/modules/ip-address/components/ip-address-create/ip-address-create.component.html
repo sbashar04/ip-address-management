@@ -10,6 +10,15 @@
 
 <div class="row clearfix">
     <div class="col-md-6 offset-md-3">
+
+        <div
+            class="px-4 py-3 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+            role="alert"
+            *ngIf="errors && errors?.message"
+        >
+            {{ errors.message }}
+        </div>
+
         <!--================================-->
         <!-- IP Addresses Start -->
         <!--================================-->
@@ -20,27 +29,54 @@
                 </h4>
             </div>
             <div class="card-body collapse show">
-                <div class="row">
+                <form [formGroup]="form" class="row" (submit)="handleSubmit()">
                     <div class="col-md-12">
                         <div class="form-group mb-3">
                             <label for="ip_address">IP Address</label>
-                            <input type="text" id="ip_address" class="form-control" placeholder="IP Address" aria-label="IP Address" aria-describedby="ip address" />
+                            <input
+                                type="text"
+                                formControlName="ip_address"
+                                id="ip_address"
+                                class="form-control"
+                                placeholder="IP Address"
+                                autocomplete="off"
+                            />
+                            <ng-container *ngIf="form.get('ip_address')?.errors && (form.get('ip_address')?.touched || form.get('ip_address')?.dirty)">
+                                <app-form-error *ngIf="form.get('ip_address')?.errors['required']" message="IP Address is required."></app-form-error>
+                                <app-form-error *ngIf="form.get('ip_address')?.errors['pattern']" message="IP Address is invalid."></app-form-error>
+                            </ng-container>
+
+                            <app-form-error *ngIf="errors && errors?.messages?.ip_address" [message]="errors.messages.ip_address[0]"></app-form-error>
+
                         </div>
                     </div>
 
                     <div class="col-md-12">
                         <div class="form-group mb-3">
-                            <label for="label">Comment / Label</label>
-                            <input type="text" id="label" class="form-control" placeholder="Comment / Label" aria-label="Label" aria-describedby="Label" />
+                            <label for="label">Label</label>
+                            <input
+                                type="text"
+                                formControlName="label"
+                                id="label"
+                                class="form-control"
+                                autocomplete="off"
+                                placeholder="Label, e.g.: Spare or BFBC2 Server"
+                            />
+                            <ng-container *ngIf="form.get('label')?.errors && (form.get('label')?.touched || form.get('label')?.dirty)">
+                                <app-form-error *ngIf="form.get('label')?.errors['required']" message="Label is required."></app-form-error>
+                            </ng-container>
+
+                            <app-form-error *ngIf="errors && errors?.messages?.label" [message]="errors.messages.label[0]"></app-form-error>
+
                         </div>
                     </div>
 
                     <div class="col-md-12">
                         <div class="form-group mb-3">
-                            <button type="submit" class="btn btn-info">Save</button>
+                            <button type="submit" class="btn btn-info" [disabled]="form.invalid || submitting">Save <i class="fa fa-circle-o-notch fa-spin" *ngIf="submitting"></i></button>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

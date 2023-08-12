@@ -33,6 +33,9 @@
                             <app-form-error *ngIf="form.get('email')?.errors['required']" message="Email is required."></app-form-error>
                             <app-form-error *ngIf="form.get('email')?.errors['email']" message="Email is invalid."></app-form-error>
                         </ng-container>
+
+                        <app-form-error *ngIf="errors && errors.messages.email" [message]="errors.messages.email[0]"></app-form-error>
+
                     </div>
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
@@ -47,6 +50,9 @@
                         <ng-container *ngIf="form.get('password')?.errors && (form.get('password')?.touched || form.get('password')?.dirty)">
                             <app-form-error *ngIf="form.get('password')?.errors['required']" message="Password is required."></app-form-error>
                         </ng-container>
+
+                        <app-form-error *ngIf="errors && errors.messages.password" [message]="errors.messages.password[0]"></app-form-error>
+
                     </div>
                     <div class="flex items-center justify-between">
                         <div class="flex items-start">
@@ -70,7 +76,7 @@
                         class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 cursor-pointer disabled:cursor-not-allowed"
                         [disabled]="form.invalid || submitting"
                     >
-                        Sign in
+                        Sign in <i class="fa fa-circle-o-notch fa-spin" *ngIf="submitting"></i>
                     </button>
                     <p class="text-sm font-light text-gray-500 dark:text-gray-400">Don’t have an account yet? <a href="#" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a></p>
                 </form>
