@@ -39,7 +39,7 @@ class AuthController extends Controller
             return response()->json($response, 200);
         }
         $response['errors']['message'] = 'Invalid credentials';
-        return response()->json($response, 402);
+        return response()->json($response, 422);
     }
 
     public function register(Request $request)
