@@ -21,6 +21,9 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./modules/register/register.module').then(m => m.RegisterModule)
   },
+  {
+    path: 'forgot-password',
+    loadChildren: () => import('./modules/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule)
   }
 ];
 
