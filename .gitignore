@@ -1,3 +1,4 @@
-/backup
+backup
 error.log
 .env
+logs

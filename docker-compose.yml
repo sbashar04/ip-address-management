@@ -11,6 +11,7 @@ services:
       - ./logs/nginx/:/var/log/nginx
       - ./docker/nginx/sites:/etc/nginx/sites-available
       - ./app/server:/var/www/html/
+      - ./app/client/dist/client:/var/www/ipam-frontend/
     ports:
       - "80:80"
       - "443:443"
