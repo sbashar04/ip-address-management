@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './guards/auth.guard';
+import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./modules/audit-log/audit-log.module').then(m => m.AuditLogModule),
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'ip-addresses',
     loadChildren: () => import('./modules/ip-address/ip-address.module').then(m => m.IpAddressModule),
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'login',

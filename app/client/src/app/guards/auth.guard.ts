@@ -1,21 +1,15 @@
-import { Injectable, inject } from '@angular/core';
-import { Router, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth/auth.service';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthGuard {
+export const authGuard = () => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
 
-  router = inject(Router);
-
-  canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const token = 'yes';
-    if (!token) {
-      this.router.navigate(['login']);
-      return false;
-    }
+  if (authService.isLoggedIn()) {
     return true;
   }
 
+  // Redirect to the login page
+  return router.parseUrl('/login');
 }
