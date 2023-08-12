@@ -1,42 +1,49 @@
 <!--================================-->
 <!-- Page Container Start -->
 <!--================================-->
-<div class="page-container">
+<ng-container *ngIf="!isLoginPage; else loginForm">
+    <div class="page-container">
 
-   <app-sidebar></app-sidebar>
+    <app-sidebar></app-sidebar>
 
-   <!--================================-->
-   <!-- Page Content Start -->
-   <!--================================-->
-   <div class="page-content">
+    <!--================================-->
+    <!-- Page Content Start -->
+    <!--================================-->
+    <div class="page-content">
 
-      <app-header></app-header>
+        <app-header></app-header>
 
-        <!--================================-->
-        <!-- Page Inner Start -->
-        <!--================================-->
-        <div class="page-inner">
             <!--================================-->
-            <!-- Main Wrapper Start -->
+            <!-- Page Inner Start -->
             <!--================================-->
-            <div id="main-wrapper">
-                <router-outlet></router-outlet>
+            <div class="page-inner">
+                <!--================================-->
+                <!-- Main Wrapper Start -->
+                <!--================================-->
+                <div id="main-wrapper">
+                    <router-outlet></router-outlet>
+                </div>
+                <!--/ Main Wrapper End -->
             </div>
-            <!--/ Main Wrapper End -->
+            <!--/ Page Inner End -->
+            <!--================================-->
+            <!-- Page Footer Start -->
+            <!--================================-->
+            <footer class="page-footer bg-gray-100">
+                <div class="pd-y-10 pd-x-25">
+                    <span class="tx-italic text-muted">Copyright&copy; 2019</span>
+                </div>
+            </footer>
+            <!-- Page Footer End -->
         </div>
-        <!--/ Page Inner End -->
-        <!--================================-->
-        <!-- Page Footer Start -->
-        <!--================================-->
-        <footer class="page-footer bg-gray-100">
-            <div class="pd-y-10 pd-x-25">
-                <span class="tx-italic text-muted">Copyright&copy; 2019</span>
-            </div>
-        </footer>
-        <!-- Page Footer End -->
+        <!-- / End Page Content -->
     </div>
-    <!-- / End Page Content -->
-</div>
+</ng-container>
+
+<ng-template #loginForm>
+    <router-outlet></router-outlet>
+</ng-template>
+
 <!--/ Page Container -->
 <!--================================-->
 

@@ -9,6 +9,7 @@ import {
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { endpointsWithoutAuth } from '../config/constants';
 
 @Injectable()
 export class HttpHandlerInterceptor implements HttpInterceptor {
@@ -24,7 +25,11 @@ export class HttpHandlerInterceptor implements HttpInterceptor {
     console.log(request.url);
     request = request.clone({url: `${environment.apiUrl}${request.url}`});
     request.headers.set('Content-Type', 'application/json');
-    // request.headers.set('Authorization', `Bearer ${token}`);
+
+    // Ignoring authorization for some endpoints
+    if(!endpointsWithoutAuth.includes(request.url)){
+      request.headers.set('Authorization', `Bearer ${token}`);
+    }
 
     return next.handle(request).pipe(
       tap({
