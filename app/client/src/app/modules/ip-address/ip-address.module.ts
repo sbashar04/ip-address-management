@@ -9,14 +9,17 @@ const routes: Routes = [
   {
     path: '',
     component: IpAddressListComponent,
+    title: 'IP Address List | IP Address Management',
   },
   {
     path: 'create',
     component: IpAddressCreateComponent,
+    title: 'Create a new IP Address | IP Address Management',
   },
   {
     path: 'edit/:id',
     component: IpAddressEditComponent,
+    title: 'Update IP Address | IP Address Management',
   }
 ];
 

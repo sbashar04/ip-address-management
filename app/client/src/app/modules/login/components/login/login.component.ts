@@ -21,7 +21,7 @@ export class LoginComponent {
   }
 
   handleLoginFormSubmission () {
-    console.log(this.form.value);
+    console.log(this.form.value, 'Nice');
   }
 
 }

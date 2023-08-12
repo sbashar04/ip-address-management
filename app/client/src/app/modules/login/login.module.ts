@@ -8,6 +8,7 @@ const routes: Routes = [
   {
     path: '',
     component: LoginComponent,
+    title: 'Login | IP Address Management',
   },
 ];
 
