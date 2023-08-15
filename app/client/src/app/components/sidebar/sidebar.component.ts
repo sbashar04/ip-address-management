@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { NavigationStart, Router, RouterLink } from '@angular/router';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,6 +10,23 @@ import { RouterLink } from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnDestroy {
+
+  currentUrlPath = '';
+  subscriptions = new SubSink();
+
+  constructor(
+    private router: Router,
+  ) {
+    this.subscriptions.sink = this.router.events.subscribe(event => {
+      if(event instanceof NavigationStart) {
+        this.currentUrlPath = event.url;
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
 
 }

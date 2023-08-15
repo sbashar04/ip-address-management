@@ -5,10 +5,10 @@
     <div class="page-sidebar-inner">
         <div class="page-sidebar-menu">
             <ul class="accordion-menu">
-                <li>
+                <li [class.active]="currentUrlPath ==='/'">
                     <a routerLink="/"><i class="fa fa-tachometer"></i> <span>Audit Log</span></a>
                 </li>
-                <li>
+                <li [class.active]="currentUrlPath ==='/ip-addresses'">
                     <a routerLink="/ip-addresses"><i class="fa fa-object-group"></i> <span>IP Address</span></a>
                 </li>
             </ul>
