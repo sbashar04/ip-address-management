@@ -35,11 +35,12 @@ export class IpAddressListComponent implements OnInit, OnDestroy {
       if(queryParams['page']){
         this.isLoading = true;
 
-        if(this.storageService.ipAddresses && this.currentPageIndex === queryParams['page']) {
+        if(this.storageService.ipAddress?.list && this.currentPageIndex === queryParams['page']) {
           this.ipAddresses$ = this.storageService.getIpAddresses();
         }else{
           this.currentPageIndex = queryParams['page'];
           this.storageService.setIpAddresses(null);
+          this.storageService.setSelectedPageIndex(null);
           this.ipAddresses$ = this.ipAddressService.getIpAddresses(this.currentPageIndex);
         }
 
@@ -51,6 +52,7 @@ export class IpAddressListComponent implements OnInit, OnDestroy {
           next: response => {
             this.ipAddressList = response;
             this.storageService.setIpAddresses(this.ipAddressList);
+            this.storageService.setSelectedPageIndex(this.currentPageIndex);
           },
           error: ({error}) => {
             this.errors = error?.errors;
@@ -58,7 +60,8 @@ export class IpAddressListComponent implements OnInit, OnDestroy {
         });
       }else{
         this.isLoading = true;
-        if(this.storageService.ipAddresses) {
+        this.currentPageIndex = 1;
+        if(this.storageService.ipAddress?.list && this.currentPageIndex === this.storageService.ipAddress?.selectedPageIndex) {
           this.ipAddresses$ = this.storageService.getIpAddresses();
         }else{
           this.ipAddresses$ = this.ipAddressService.getIpAddresses(this.currentPageIndex);
@@ -72,6 +75,7 @@ export class IpAddressListComponent implements OnInit, OnDestroy {
           next: response => {
             this.ipAddressList = response;
             this.storageService.setIpAddresses(this.ipAddressList);
+            this.storageService.setSelectedPageIndex(this.currentPageIndex);
           },
           error: ({error}) => {
             this.errors = error?.errors;

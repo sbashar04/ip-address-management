@@ -8,20 +8,45 @@ import { IIpAddressList, ISingleIp } from 'src/app/modules/ip-address/ip-address
 })
 export class StorageService {
 
-  ipAddresses: IIpAddressList;
   auditLogs: IAuditLog;
-  selectedIpAddress: ISingleIp;
+
+  ipAddress: IpAddressStore = {
+    list: null,
+    selectedIp: null,
+    selectedPageIndex: 1,
+  };
+  // ipAddresses: IIpAddressList;
+  // selectedIpAddress: ISingleIp;
 
   constructor() { }
 
   setIpAddresses (ipAddresses: IIpAddressList) {
-    this.ipAddresses = ipAddresses;
+    this.ipAddress.list = ipAddresses;
   }
 
   getIpAddresses(): Observable<IIpAddressList> {
-    return of(this.ipAddresses);
+    return of(this.ipAddress.list);
   }
 
+  setSelectedIpAddress (selectedIpAddress: ISingleIp) {
+    this.ipAddress.selectedIp = selectedIpAddress;
+  }
+
+  getSelectedIpAddress(): Observable<ISingleIp> | null {
+    return of(this.ipAddress.selectedIp);
+  }
+
+  setSelectedPageIndex (index: number) {
+    this.ipAddress.selectedPageIndex = index;
+  }
+
+  getSelectedPageIndex(): number {
+    return this.ipAddress.selectedPageIndex;
+  }
+
+  /**
+   * Audit Logs
+   */
   setAuditLogs (auditLogs: IAuditLog) {
     this.auditLogs = auditLogs;
   }
@@ -30,12 +55,10 @@ export class StorageService {
     return of(this.auditLogs);
   }
 
-  setSelectedIpAddress (selectedIpAddress: ISingleIp) {
-    this.selectedIpAddress = selectedIpAddress;
-  }
+}
 
-  getSelectedIpAddress(): Observable<ISingleIp> | null {
-    return of(this.selectedIpAddress);
-  }
-
+interface IpAddressStore {
+  list: IIpAddressList,
+  selectedIp: ISingleIp,
+  selectedPageIndex: number,
 }

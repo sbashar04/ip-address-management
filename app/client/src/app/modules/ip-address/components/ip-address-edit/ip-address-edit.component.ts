@@ -39,7 +39,7 @@ export class IpAddressEditComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
-    if(this.storageService.selectedIpAddress) {
+    if(this.storageService.ipAddress.selectedIp) {
       this.ipAddress$ = this.storageService.getSelectedIpAddress();
     }else{
       this.ipAddress$ = this.ipAddressService.getSingleIp(this.id);
