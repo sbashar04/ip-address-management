@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { endpointsWithoutAuth } from '../config/constants';
 import { AuthService } from '../services/auth/auth.service';
+import Swal from 'sweetalert2';
 
 @Injectable()
 export class HttpHandlerInterceptor implements HttpInterceptor {
@@ -50,10 +51,17 @@ export class HttpHandlerInterceptor implements HttpInterceptor {
         next: (event) => {
           if (event instanceof HttpResponse) {
             if (event.status == 401) {
-              // this.authService.logout();
-              // this.router.navigate(['login']);
+              this.authService.logout();
+              this.router.navigate(['login']);
 
-              // @TODO Add toast service
+              Swal.fire({
+                title: 'Warning!',
+                text: 'Authorization Error. Login first.',
+                icon: 'error',
+                confirmButtonText: 'Login'
+              }).then(() => {
+                this.router.navigate(['login']);
+              });
             }
           }
           return event;
@@ -61,8 +69,14 @@ export class HttpHandlerInterceptor implements HttpInterceptor {
         error: (error) => {
           if(error.status === 401) {
             this.authService.logout();
-            this.router.navigate(['login']);
-            // @TODO Add toast service
+            Swal.fire({
+              title: 'Warning!',
+              text: 'Authorization Error. Login first.',
+              icon: 'error',
+              confirmButtonText: 'Login'
+            }).then(() => {
+              this.router.navigate(['login']);
+            });
           } else if(error.status === 404) {
             alert('Page Not Found!')
           }

@@ -7,6 +7,7 @@ import { finalize } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { User } from 'src/app/models/user.model';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -56,9 +57,14 @@ export class LoginComponent implements OnDestroy {
           }
           this.authService.authenticate(user, responseUserProfile.token);
 
-          // @TODO Toast for success
-
-          this.router.navigate(['/']);
+          Swal.fire({
+            title: 'Success!',
+            text: 'Welcome Back! Login successful.',
+            icon: 'success',
+            confirmButtonText: 'OKAY'
+          }).then(() => {
+            this.router.navigate(['/']);
+          });
         },
         error: ({error}) => {
           this.errors = error?.errors;
