@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavigationStart, Router, RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { SubSink } from 'subsink';
 
 @Component({
@@ -19,9 +19,9 @@ export class SidebarComponent implements OnDestroy {
   constructor(
     private router: Router,
   ) {
-    this.subscriptions.sink = this.router.events.subscribe(event => {
-      if(event instanceof NavigationStart) {
-        this.currentUrlPath = event.url.split('?')[0];
+    this.router.events.subscribe(event => {
+      if(event instanceof NavigationEnd) {
+        this.currentUrlPath = event?.urlAfterRedirects.split("?")[0];
       }
     });
   }

@@ -61,10 +61,19 @@ export class LoginComponent implements OnDestroy {
             title: 'Success!',
             text: 'Welcome Back! Login successful.',
             icon: 'success',
-            confirmButtonText: 'OKAY'
-          }).then(() => {
-            this.router.navigate(['/']);
+            showConfirmButton: false,
+            timer: 2000,
           });
+
+          if(this.form.get('remember').value) {
+            localStorage.setItem('remember', 'true');
+          }
+
+          this.form.reset();
+
+          setTimeout(() => {
+            this.router.navigate(['/']);
+          }, 2000);
         },
         error: ({error}) => {
           this.errors = error?.errors;
