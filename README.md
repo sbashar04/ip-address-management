@@ -1,6 +1,9 @@
 # IP Address Management Solution
 IP Address Management Solution is an application where you can manage a list of ip address and see the logs of every addition and changes.
 
+## Information
+
+This application is developed on Windows 11 by creating necessary environment using `Docker`.
 
 ## Features
 
@@ -75,6 +78,18 @@ IP Address Management Solution is an application where you can manage a list of 
     ```bash
     Username: admin@ipam.test
     Password: admin1234
+    ```
+
+12. To make modifications in the frontend application, access to the docker image by running
+
+    ```bash
+    docker exec -it ipam_angular //bin//bash
+    ```
+
+13. To run angular local server
+
+    ```bash
+    npm start
     ```
 
 # Contact
