@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,4 +34,6 @@ Route::group(['middleware' => ['auth:api']], function(){
     Route::apiResources([
         'ip-address' => IpAddressController::class
     ]);
+
+    Route::get('/logs', [AuditLogController::class, 'index']);
 });
