@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PaginationComponent } from './pagination.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PaginationComponent', () => {
   let component: PaginationComponent;
@@ -8,7 +9,10 @@ describe('PaginationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PaginationComponent ]
+      imports: [
+        PaginationComponent,
+        RouterTestingModule,
+      ],
     })
     .compileComponents();
 
