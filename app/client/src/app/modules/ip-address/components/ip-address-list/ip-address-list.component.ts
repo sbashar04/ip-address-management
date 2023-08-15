@@ -19,6 +19,7 @@ export class IpAddressListComponent implements OnInit, OnDestroy {
   ipAddressList: IIpAddressList = null;
   subscriptions = new SubSink();
   isIpAddressUpdated = false;
+  isIpAddressCreated = false;
 
   constructor(
     private router: Router,
@@ -32,6 +33,8 @@ export class IpAddressListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     this.isIpAddressUpdated = this.storageService.isIpAddressUpdated;
+    this.isIpAddressCreated = this.storageService.isIpAddressCreated;
+    this.storageService.isIpAddressCreated = false;
     this.storageService.isIpAddressUpdated = false;
 
     if(this.storageService.ipAddresses) {

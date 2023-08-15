@@ -26,6 +26,12 @@
                             <div class="form-group mb-3">
                                 <label for="label">Comment / Label</label>
                                 <input type="text" formControlName="label" id="label" class="form-control" placeholder="Comment / Label" autocomplete="off" />
+
+                                <ng-container *ngIf="form.get('label')?.errors && (form.get('label')?.touched || form.get('label')?.dirty)">
+                                    <app-form-error *ngIf="form.get('label')?.errors['required']" message="Label is required."></app-form-error>
+                                </ng-container>
+
+                                <app-form-error *ngIf="errors && errors?.messages?.label" [message]="errors.messages.label[0]"></app-form-error>
                             </div>
                         </div>
 
