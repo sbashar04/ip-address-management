@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        \App\Models\IpAddress::factory(100)->create();
+        // \App\Models\IpAddress::factory(100)->create();
+        // \App\Models\AuditLog::factory(100)->create();
     }
 }
