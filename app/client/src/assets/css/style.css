@@ -463,7 +463,8 @@ body {
 	margin-top: 5px;
 }
 
-.header-right ul li a {
+.header-right ul li a,
+.header-right ul li button {
 	margin: 0 5px;
 	display: block;
 }
@@ -516,13 +517,15 @@ body {
 }
 
 .header-right .languages-dropdown li a,
-.header-right .profile-dropdown li a {
+.header-right .profile-dropdown li a,
+.header-right .profile-dropdown li button {
 	color: #6c757d;
 	padding: 5px 10px;
 	display: block;
 }
 
-.header-right .profile-dropdown li a i {
+.header-right .profile-dropdown li a i,
+.header-right .profile-dropdown li button i {
 	margin-right: 10px;
 }
 

@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ApiEndpoints } from 'src/app/config/api-endpoints';
 import { User } from 'src/app/models/user.model';
 
 @Injectable({
@@ -6,17 +9,17 @@ import { User } from 'src/app/models/user.model';
 })
 export class AuthService {
 
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+  ) { }
 
   authenticate(user: User, token: string): void {
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
   }
 
-  logout(): void {
-    localStorage.removeItem('remember');
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+  logout(): Observable<any> {
+    return this.http.post<any>(ApiEndpoints.LOGOUT, {});
   }
 
   getUser(): User | null {

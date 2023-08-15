@@ -13,7 +13,7 @@ import { SubSink } from 'subsink';
 export class SidebarComponent implements OnDestroy {
 
   @Input() collapse = false;
-  currentUrlPath = '';
+  currentUrlPath = '/';
   subscriptions = new SubSink();
 
   constructor(
