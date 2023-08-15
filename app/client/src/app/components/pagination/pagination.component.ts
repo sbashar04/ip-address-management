@@ -22,7 +22,6 @@ export class PaginationComponent {
     }
 
     getPageIndexFromPaginationUrl (url: string): number {
-        console.log(url);
         if(url && url.indexOf("page=") > -1) {
             return Number(url.split("page=")[1]);
         }

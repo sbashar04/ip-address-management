@@ -20,7 +20,7 @@ export class SidebarComponent implements OnDestroy {
   ) {
     this.subscriptions.sink = this.router.events.subscribe(event => {
       if(event instanceof NavigationStart) {
-        this.currentUrlPath = event.url;
+        this.currentUrlPath = event.url.split('?')[0];
       }
     });
   }
