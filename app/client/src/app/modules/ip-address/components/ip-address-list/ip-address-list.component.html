@@ -7,7 +7,6 @@
     </div>
 </div>
 
-
 <div class="row clearfix">
     <div class="col-md-12 col-lg-12 col-xl-12">
         <!--================================-->
@@ -20,156 +19,55 @@
                 </h4>
             </div>
             <div class="card-body collapse show">
-                <div id="hoverTable_wrapper" class="dataTables_wrapper dt-jqueryui">
-                    <div class="fg-toolbar ui-toolbar ui-widget-header ui-helper-clearfix ui-corner-tl ui-corner-tr">
-                        <div class="dataTables_length" id="hoverTable_length">
-                            <label>
-                                Show
-                                <select name="hoverTable_length" aria-controls="hoverTable" class="">
-                                    <option value="10">10</option>
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                </select>
-                                entries
-                            </label>
-                        </div>
-                        <div id="hoverTable_filter" class="dataTables_filter">
-                            <label><input type="search" class="" placeholder="Search..." aria-controls="hoverTable" /></label>
-                        </div>
+                <ng-container *ngIf="isLoading === false; else loading">
+
+                    <div class="data-wrapper" *ngIf="ipAddressList?.data?.ip_addresses?.total > 0; else noIpAddressFoundBlock">
+                        <table class="table table-responsive table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>IP Address</th>
+                                    <th>Label</th>
+                                    <th>Date Created</th>
+                                    <th>Modified</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let ip of ipAddressList?.data?.ip_addresses?.data">
+                                    <td>{{ ip.id }}</td>
+                                    <td>{{ ip.ip_address }}</td>
+                                    <td>{{ ip.label }}</td>
+                                    <td>{{ ip.created_at }}</td>
+                                    <td>{{ ip.updated_at }}</td>
+                                    <td>
+                                        <a [routerLink]="['/ip-addresses/edit', ip.id]" (click)="setSelectedIpAddress(ip)" class="btn btn-info">Edit <i class="fa fa-edit"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <app-pagination
+                            [baseUrl]="'/ip-addresses'"
+                            [currentPageIndex]="ipAddressList?.data?.ip_addresses?.current_page"
+                            [lastPageIndex]="ipAddressList?.data?.ip_addresses?.last_page"
+                            [pageLinks]="ipAddressList?.data?.ip_addresses?.links"
+                        ></app-pagination>
                     </div>
-                    <table id="hoverTable" class="table hover responsive nowrap dataTable dtr-inline collapsed" role="grid" aria-describedby="hoverTable_info" style="width: 1575px;">
-                        <thead>
-                            <tr role="row">
-                                <th class="sorting ui-state-default sorting_asc" tabindex="0" aria-controls="hoverTable" rowspan="1" colspan="1" style="width: 277px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">
-                                    <div class="DataTables_sort_wrapper">Name<span class="DataTables_sort_icon css_right ui-icon ui-icon-triangle-1-n"></span></div>
-                                </th>
-                                <th class="sorting ui-state-default" tabindex="0" aria-controls="hoverTable" rowspan="1" colspan="1" style="width: 401px;" aria-label="Position: activate to sort column ascending">
-                                    <div class="DataTables_sort_wrapper">Position<span class="DataTables_sort_icon css_right ui-icon ui-icon-caret-2-n-s"></span></div>
-                                </th>
-                                <th class="sorting ui-state-default" tabindex="0" aria-controls="hoverTable" rowspan="1" colspan="1" style="width: 208px;" aria-label="Office: activate to sort column ascending">
-                                    <div class="DataTables_sort_wrapper">Office<span class="DataTables_sort_icon css_right ui-icon ui-icon-caret-2-n-s"></span></div>
-                                </th>
-                                <th class="sorting ui-state-default" tabindex="0" aria-controls="hoverTable" rowspan="1" colspan="1" style="width: 101px;" aria-label="Age: activate to sort column ascending">
-                                    <div class="DataTables_sort_wrapper">Age<span class="DataTables_sort_icon css_right ui-icon ui-icon-caret-2-n-s"></span></div>
-                                </th>
-                                <th class="sorting ui-state-default" tabindex="0" aria-controls="hoverTable" rowspan="1" colspan="1" style="width: 194px;" aria-label="Start date: activate to sort column ascending">
-                                    <div class="DataTables_sort_wrapper">Start date<span class="DataTables_sort_icon css_right ui-icon ui-icon-caret-2-n-s"></span></div>
-                                </th>
-                                <th class="sorting ui-state-default" tabindex="0" aria-controls="hoverTable" rowspan="1" colspan="1" style="width: 171px; display: none;" aria-label="Salary: activate to sort column ascending">
-                                    <div class="DataTables_sort_wrapper">Salary<span class="DataTables_sort_icon css_right ui-icon ui-icon-caret-2-n-s"></span></div>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr role="row" class="odd">
-                                <td tabindex="0" class="sorting_1">Airi Satou</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>33</td>
-                                <td>2008/11/28</td>
-                                <td style="display: none;">$162,700</td>
-                            </tr>
-                            <tr role="row" class="even">
-                                <td class="sorting_1" tabindex="0">Angelica Ramos</td>
-                                <td>Chief Executive Officer (CEO)</td>
-                                <td>London</td>
-                                <td>47</td>
-                                <td>2009/10/09</td>
-                                <td style="display: none;">$1,200,000</td>
-                            </tr>
-                            <tr role="row" class="odd">
-                                <td tabindex="0" class="sorting_1">Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>San Francisco</td>
-                                <td>66</td>
-                                <td>2009/01/12</td>
-                                <td style="display: none;">$86,000</td>
-                            </tr>
-                            <tr role="row" class="even">
-                                <td class="sorting_1" tabindex="0">Bradley Greer</td>
-                                <td>Software Engineer</td>
-                                <td>London</td>
-                                <td>41</td>
-                                <td>2012/10/13</td>
-                                <td style="display: none;">$132,000</td>
-                            </tr>
-                            <tr role="row" class="odd">
-                                <td class="sorting_1" tabindex="0">Brenden Wagner</td>
-                                <td>Software Engineer</td>
-                                <td>San Francisco</td>
-                                <td>28</td>
-                                <td>2011/06/07</td>
-                                <td style="display: none;">$206,850</td>
-                            </tr>
-                            <tr role="row" class="even">
-                                <td tabindex="0" class="sorting_1">Brielle Williamson</td>
-                                <td>Integration Specialist</td>
-                                <td>New York</td>
-                                <td>61</td>
-                                <td>2012/12/02</td>
-                                <td style="display: none;">$372,000</td>
-                            </tr>
-                            <tr role="row" class="odd">
-                                <td class="sorting_1" tabindex="0">Bruno Nash</td>
-                                <td>Software Engineer</td>
-                                <td>London</td>
-                                <td>38</td>
-                                <td>2011/05/03</td>
-                                <td style="display: none;">$163,500</td>
-                            </tr>
-                            <tr role="row" class="even">
-                                <td class="sorting_1" tabindex="0">Caesar Vance</td>
-                                <td>Pre-Sales Support</td>
-                                <td>New York</td>
-                                <td>21</td>
-                                <td>2011/12/12</td>
-                                <td style="display: none;">$106,450</td>
-                            </tr>
-                            <tr role="row" class="odd">
-                                <td class="sorting_1" tabindex="0">Cara Stevens</td>
-                                <td>Sales Assistant</td>
-                                <td>New York</td>
-                                <td>46</td>
-                                <td>2011/12/06</td>
-                                <td style="display: none;">$145,600</td>
-                            </tr>
-                            <tr role="row" class="even">
-                                <td tabindex="0" class="sorting_1">Cedric Kelly</td>
-                                <td>Senior Javascript Developer</td>
-                                <td>Edinburgh</td>
-                                <td>22</td>
-                                <td>2012/03/29</td>
-                                <td style="display: none;">$433,060</td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th class="ui-state-default" rowspan="1" colspan="1">Name</th>
-                                <th class="ui-state-default" rowspan="1" colspan="1">Position</th>
-                                <th class="ui-state-default" rowspan="1" colspan="1">Office</th>
-                                <th class="ui-state-default" rowspan="1" colspan="1">Age</th>
-                                <th class="ui-state-default" rowspan="1" colspan="1">Start date</th>
-                                <th class="ui-state-default" rowspan="1" colspan="1" style="display: none;">Salary</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                    <div class="fg-toolbar ui-toolbar ui-widget-header ui-helper-clearfix ui-corner-bl ui-corner-br">
-                        <div class="dataTables_info mb-4" id="hoverTable_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div>
-                        <div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_simple_numbers" id="hoverTable_paginate">
-                            <a class="fg-button ui-button ui-state-default previous ui-state-disabled" aria-controls="hoverTable" data-dt-idx="0" tabindex="0" id="hoverTable_previous">Previous</a>
-                            <span>
-                                <a class="fg-button ui-button ui-state-default ui-state-disabled" aria-controls="hoverTable" data-dt-idx="1" tabindex="0">1</a>
-                                <a class="fg-button ui-button ui-state-default" aria-controls="hoverTable" data-dt-idx="2" tabindex="0">2</a>
-                                <a class="fg-button ui-button ui-state-default" aria-controls="hoverTable" data-dt-idx="3" tabindex="0">3</a>
-                                <a class="fg-button ui-button ui-state-default" aria-controls="hoverTable" data-dt-idx="4" tabindex="0">4</a>
-                                <a class="fg-button ui-button ui-state-default" aria-controls="hoverTable" data-dt-idx="5" tabindex="0">5</a>
-                                <a class="fg-button ui-button ui-state-default" aria-controls="hoverTable" data-dt-idx="6" tabindex="0">6</a>
-                            </span>
-                            <a class="fg-button ui-button ui-state-default next" aria-controls="hoverTable" data-dt-idx="7" tabindex="0" id="hoverTable_next">Next</a>
+
+                    <ng-template #noIpAddressFoundBlock>
+                        <div class="text-left">
+                            <p class="text-base text-red-800">No ip address found.</p>
                         </div>
+                    </ng-template>
+                </ng-container>
+                <ng-template #loading>
+                    <div class="text-center">
+                        <p class="text-3xl">Please Wait</p>
+                        <p><i class="fa fa-circle-o-notch fa-spin text-3xl"></i></p>
                     </div>
-                </div>
+                </ng-template>
             </div>
         </div>
     </div>

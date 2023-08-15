@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LogViewerComponent } from './log-viewer.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('LogViewerComponent', () => {
   let component: LogViewerComponent;
@@ -8,7 +10,11 @@ describe('LogViewerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LogViewerComponent ]
+      declarations: [ LogViewerComponent ],
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule,
+      ]
     })
     .compileComponents();
 

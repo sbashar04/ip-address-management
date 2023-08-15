@@ -1,78 +1,81 @@
-version: '3'
+version: '2'
+
 services:
-  # PHP Service
-  server:
+  nginx:
+    container_name: ipam_nginx
     build:
-      context: .
-      dockerfile: ./server/DockerFile
-    container_name: "ipam_server"
-    environment:
-      SERVICE_NAME: server
-    working_dir: /var/www/server
+      context: ./docker/nginx/
+      args:
+        - PHP_UPSTREAM=php
     volumes:
-      - ./server/:/var/www/server
-    networks:
-      - private
-
-  # Frontend Service
-  client:
-    build:
-      context: .
-      dockerfile: ./client/DockerFile
-    container_name: "ipam_client"
-    working_dir: /var/www/client
-    volumes:
-      - ./client/:/var/www/client
+      - ./logs/nginx/:/var/log/nginx
+      - ./docker/nginx/sites:/etc/nginx/sites-available
+      - ./app/server:/var/www/html/
+      - ./app/client/dist/client:/var/www/ipam-frontend/
     ports:
-      - '4200:4200'
-    command: >
-        bash -c "npm install && ng serve --host 0.0.0.0 --port 4200"
-    networks:
-      - private
-
-  # Nginx Service
-  webserver:
-    image: nginx:alpine
-    container_name: "ipam_webserver"
-    ports:
-      - "8000:80"
+      - "80:80"
       - "443:443"
-    volumes:
-      - ./server/:/var/www/server
+    depends_on:
+      - php
     networks:
-      - private
+      - frontend
+      - backend
 
-  # MySQL Service
-  mysql:
-    image: mysql:latest
-    container_name: "ipam_mysql"
-    tty: true
-    environment:
-      MYSQL_USER: ${USER_MYSQL}
-      MYSQL_PASSWORD: ${PASS_MYSQL}
-      MYSQL_DATABASE: ${MYSQL_DB}
-      MYSQL_ROOT_PASSWORD: ${PASS_ROOT_MYSQL}
-      MYSQL_ROOT_HOST: '%'
-      SERVICE_NAME: mysql
-    volumes:
-      - ./docker/mysql/dbdata/:/var/lib/mysql-files/
-      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
-    networks:
-      - private
-
-  # PHPMYADMIN Service
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: "${PROJECT_NAME}_phpmyadmin"
+  angular:
+    container_name: ipam_angular
+    build: ./app/client
     ports:
-      - "7000:80"
-    links:
-      - mysql:mysql
-    environment:
-      MYSQL_USER: ${USER_MYSQL}
-      MYSQL_PASSWORD: ${PASS_MYSQL}
-      MYSQL_ROOT_PASSWORD: ${PASS_ROOT_MYSQL}
-      MYSQL_ROOT_HOST: '%'
-      PMA_HOST: mysql
+      - "4200:4200"
+    volumes:
+      - ./app/client:/usr/src/app
     networks:
-      - private
+      - frontend
+
+  php:
+    build: ./docker/php/${PHP_VERSION}
+    container_name: ipam_php
+    volumes:
+      - ./app/server:/var/www/html
+    links:
+      - ipam_mysql8
+    networks:
+      - backend
+
+  ipam_mysql8:
+    image: mysql:8.0
+    container_name: ipam_mysql8
+    build:
+      context: ./docker/mysql8
+    ports:
+      - "${DB_PORT_MYSQL_8}:3306"
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - TZ=${DB_TIMEZONE}
+    volumes:
+      - ./docker/mysql8/conf.d:/etc/mysql/conf.d:ro
+      - ./docker/mysql8/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./backup/mysql8/logs:/var/log/mysql:rw
+      - ./backup/mysql8/data:/var/lib/mysql
+    networks:
+      - backend
+
+  adminer:
+    container_name: ipam_adminer
+    image: adminer:${ADMINER_VERSION}-standalone
+    ports:
+      - ${ADMINER_PORT}:8080
+    env_file:
+      - .env
+    links:
+      - ipam_mysql8
+    networks:
+      - backend
+
+networks:
+  frontend:
+    driver: "bridge"
+  backend:
+    driver: "bridge"

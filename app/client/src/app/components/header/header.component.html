@@ -1,0 +1,41 @@
+<div class="page-header">
+    <nav class="navbar navbar-default">
+       <!--================================-->
+       <!-- Brand and Logo Start -->
+       <!--================================-->
+       <div class="navbar-header">
+          <div class="navbar-brand">
+             <ul class="list-inline">
+                <li class="list-inline-item hover:text-black"><button type="button" (click)="toggleSidebar()"><i class="ion-navicon tx-20"></i></button></li>
+             </ul>
+          </div>
+       </div>
+       <!--/ Brand and Logo End -->
+       <!--================================-->
+       <!-- Header Right Start -->
+       <!--================================-->
+       <div class="header-right pull-right">
+          <ul class="list-inline justify-content-end">
+             <!--================================-->
+             <!-- Profile Dropdown Start -->
+             <!--================================-->
+               <li class="list-inline-item dropdown min-w-[100px]">
+                  <a class="text-muted" href="javascript:void(0)" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <span class="select-profile mr-2">Hi, {{ user?.name }}!</span>
+                     <img src="assets/images/avatar/avatar.png" class="mg-b-10 img-fluid wd-30 inline" alt="">
+                  </a>
+                  <ul class="dropdown-menu profile-dropdown shadow-2">
+                     <li>
+                        <a href="javascript:void(0)"><i class="fa fa-cog"></i><span>Settings</span></a>
+                     </li>
+                     <li>
+                        <button (click)="logout()"><i class="fa fa-sign-out"></i><span>Sing Out</span></button>
+                     </li>
+                  </ul>
+               </li>
+             <!-- Profile Dropdown End -->
+          </ul>
+       </div>
+       <!--/ Header Right End -->
+    </nav>
+</div>

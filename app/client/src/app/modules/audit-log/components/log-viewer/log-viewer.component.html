@@ -16,36 +16,41 @@
                 </h4>
             </div>
             <div class="card-body collapse show">
-                <div class="pb-1 mb-2">
-                    <div class="badge-warning float-right">Feature</div>
-                    <a href="javascript:void(0)">Lorem ipsum dolor sit amet, vis erat denique in.</a>
-                    <p class="text-muted mg-b-0">Support ID: #85645563</p>
-                    <small class="text-muted">Created by: <a href="javascript:void(0)" class="text-dark">Peter Johnson</a> 1 day ago</small>
-                </div>
-                <div class="pb-1 mb-2">
-                    <div class="badge-danger float-right">Bug</div>
-                    <a href="javascript:void(0)">Lorem ipsum dolor sit amet, vis erat denique in.</a>
-                    <p class="text-muted mg-b-0">Support ID: #85645563</p>
-                    <small class="text-muted">Created by: <a href="javascript:void(0)" class="text-dark">Peter Johnson</a> 2 day ago</small>
-                </div>
-                <div class="pb-1 mb-2">
-                    <div class="badge-info float-right">Informational</div>
-                    <a href="javascript:void(0)">Lorem ipsum dolor sit amet, vis denique in.</a>
-                    <p class="text-muted mg-b-0">Support ID: #85645563</p>
-                    <small class="text-muted">Created by: <a href="javascript:void(0)" class="text-dark">Peter Johnson</a> 4 day ago</small>
-                </div>
-                <div class="pb-1 mb-2">
-                    <div class="badge-warning float-right">Feature</div>
-                    <a href="javascript:void(0)">Lorem ipsum dolor sit amet, vis erat denique in.</a>
-                    <p class="text-muted mg-b-0">Support ID: #85645563</p>
-                    <small class="text-muted">Created by: <a href="javascript:void(0)" class="text-dark">Peter Johnson</a> 3 day ago</small>
-                </div>
-                <div class="pb-1">
-                    <div class="badge-success float-right">Enhancement</div>
-                    <a href="javascript:void(0)">Lorem ipsum dolor sit amet, erat denique in.</a>
-                    <p class="text-muted mg-b-0">Support ID: #85645563</p>
-                    <small class="text-muted">Created by: <a href="javascript:void(0)" class="text-dark">Peter Johnson</a> 5 day ago</small>
-                </div>
+                <ng-container *ngIf="isLoading === false; else loading">
+                    <ng-container *ngIf="auditLogList?.data?.logs?.total > 0; else noAuditLogs">
+                        <div class="pb-1 mb-2" *ngFor="let log of auditLogList?.data?.logs?.data">
+                            <div
+                                class="float-right"
+                                [ngClass]="{'badge-success': log.log_type == 1, 'badge-info': log.log_type == 2}"
+                            >{{ log.subject }}</div>
+                            <p class="text-muted mg-b-0 text-base" *ngIf="log.log_type == 1">{{ log.new_data }}</p>
+                            <p class="text-muted mg-b-0 text-base" *ngIf="log.log_type == 2">
+                                From <span class="badge-secondary">{{ log.old_data }}</span> to <span class="badge-primary">{{ log.new_data }}</span>
+                            </p>
+                            <small class="text-muted">Created by: <span class="text-dark">{{ log.user.name }}</span> at {{ log.created_at | date: 'MMM d, y, h:mm:ss a'}}.</small>
+                        </div>
+
+                        <app-pagination
+                            [baseUrl]="'/'"
+                            [currentPageIndex]="auditLogList?.data?.logs?.current_page"
+                            [lastPageIndex]="auditLogList?.data?.logs?.last_page"
+                            [pageLinks]="auditLogList?.data?.logs?.links"
+                        ></app-pagination>
+                    </ng-container>
+
+                    <ng-template #noAuditLogs>
+                        <div class="text-left">
+                            <p class="text-base text-red-800">No audit log found.</p>
+                        </div>
+                    </ng-template>
+                </ng-container>
+
+                <ng-template #loading>
+                    <div class="text-center">
+                        <p class="text-3xl">Please Wait</p>
+                        <p><i class="fa fa-circle-o-notch fa-spin text-3xl"></i></p>
+                    </div>
+                </ng-template>
             </div>
         </div>
     </div>

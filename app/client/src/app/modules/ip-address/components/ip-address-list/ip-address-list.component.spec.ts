@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IpAddressListComponent } from './ip-address-list.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('IpAddressListComponent', () => {
   let component: IpAddressListComponent;
@@ -8,7 +10,11 @@ describe('IpAddressListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IpAddressListComponent ]
+      declarations: [ IpAddressListComponent ],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+      ]
     })
     .compileComponents();
 

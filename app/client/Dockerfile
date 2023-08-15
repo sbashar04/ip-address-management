@@ -1,9 +1,7 @@
-FROM node:latest
-
-RUN mkdir /usr/src/app && mkdir /usr/src/app/frontend
-
-WORKDIR /usr/src/app/frontend
-
+FROM node:18.17.0-alpine
+ENV HOME=/usr/src/app
+RUN mkdir -p $HOME
+WORKDIR $HOME
 RUN npm install -g @angular/cli
-
-COPY . .
+EXPOSE 4200
+CMD [ "ng", "build" ]

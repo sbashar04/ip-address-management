@@ -13,28 +13,47 @@
         <!--================================-->
         <!-- IP Addresses Start -->
         <!--================================-->
-        <div class="card mb-4 shadow-1">
-            <div class="card-header">
-                <h4 class="card-header-title">
-                    Update IP
-                </h4>
-            </div>
-            <div class="card-body collapse show">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group mb-3">
-                            <label for="label">Comment / Label</label>
-                            <input type="text" id="label" class="form-control" placeholder="Comment / Label" aria-label="Label" aria-describedby="Label" />
-                        </div>
-                    </div>
+        <ng-container *ngIf="loading === false; else loadingBlock">
+            <div class="card mb-4 shadow-1">
+                <div class="card-header">
+                    <h4 class="card-header-title">
+                        Update IP
+                    </h4>
+                </div>
+                <div class="card-body collapse show">
+                    <form class="row" [formGroup]="form" (submit)="handleSubmit()">
+                        <div class="col-md-12">
+                            <div class="form-group mb-3">
+                                <label for="label">Comment / Label</label>
+                                <input type="text" formControlName="label" id="label" class="form-control" placeholder="Comment / Label" autocomplete="off" />
 
-                    <div class="col-md-12">
-                        <div class="form-group mb-3">
-                            <button type="submit" class="btn btn-info">Update IP</button>
+                                <ng-container *ngIf="form.get('label')?.errors && (form.get('label')?.touched || form.get('label')?.dirty)">
+                                    <app-form-error *ngIf="form.get('label')?.errors['required']" message="Label is required."></app-form-error>
+                                </ng-container>
+
+                                <app-form-error *ngIf="errors && errors?.messages?.label" [message]="errors.messages.label[0]"></app-form-error>
+                            </div>
                         </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group mb-3">
+                                <button type="submit" class="btn btn-info" [disabled]="submitting || form.invalid">Update IP <i class="fa fa-circle-o-notch fa-spin" *ngIf="submitting"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-template #loadingBlock>
+            <div class="card mb-4 shadow-1">
+                <div class="card-body">
+                    <div class="text-center">
+                        <p class="text-3xl">Please Wait</p>
+                        <p><i class="fa fa-circle-o-notch fa-spin text-3xl"></i></p>
                     </div>
                 </div>
             </div>
-        </div>
+        </ng-template>
     </div>
 </div>
