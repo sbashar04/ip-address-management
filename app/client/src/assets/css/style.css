@@ -1155,7 +1155,13 @@ ul.sub-menu li a::before {
 	width: calc(100% - 250px);
 	float: right;
 }
-
+.page-content-full {
+    min-height: 60px;
+    vertical-align: bottom;
+    background: #ebf2f7;
+    width: 100%;
+    float: right;
+}
 .page-sidebar-collapsed .page-content {
 	width: calc(100% - 60px)
 }

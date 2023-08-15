@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationStart, Router, RouterLink } from '@angular/router';
 import { SubSink } from 'subsink';
@@ -12,6 +12,7 @@ import { SubSink } from 'subsink';
 })
 export class SidebarComponent implements OnDestroy {
 
+  @Input() collapse = false;
   currentUrlPath = '';
   subscriptions = new SubSink();
 

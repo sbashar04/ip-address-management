@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
+import { SharedService } from './services/shared/shared.service';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +12,11 @@ export class AppComponent {
 
   isLoginPage = false;
 
+  sidebarCollapse = false;
+
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
+    private sharedService: SharedService,
   ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
@@ -23,10 +26,8 @@ export class AppComponent {
           this.isLoginPage = false;
         }
       }
-
     });
+
+    this.sharedService.sidebarCollapseStatus.subscribe(result => this.sidebarCollapse = result);
   }
-
-
-
 }

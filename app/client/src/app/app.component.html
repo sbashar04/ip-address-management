@@ -4,12 +4,12 @@
 <ng-container *ngIf="!isLoginPage; else loginForm">
     <div class="page-container">
 
-    <app-sidebar></app-sidebar>
+    <app-sidebar [collapse]="sidebarCollapse"></app-sidebar>
 
     <!--================================-->
     <!-- Page Content Start -->
     <!--================================-->
-    <div class="page-content">
+    <div [ngClass]="sidebarCollapse ? 'page-content-full' : 'page-content'">
 
         <app-header></app-header>
 
@@ -43,12 +43,3 @@
 <ng-template #loginForm>
     <router-outlet></router-outlet>
 </ng-template>
-
-<!--/ Page Container -->
-<!--================================-->
-
-<!--================================-->
-<!-- Scroll To Top Start-->
-<!--================================-->
-<a href="#" data-click="scroll-top" class="btn-scroll-top fade"><i class="fa fa-arrow-up"></i></a>
-<!--/ Scroll To Top End -->
