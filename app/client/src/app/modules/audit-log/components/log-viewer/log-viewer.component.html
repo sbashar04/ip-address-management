@@ -16,9 +16,9 @@
                 </h4>
             </div>
             <div class="card-body collapse show">
-                <ng-container *ngIf="(logs$ | async) as logs; else loading">
-                    <ng-container *ngIf="logs?.data?.logs?.total > 0; else noAuditLogs">
-                        <div class="pb-1 mb-2" *ngFor="let log of logs?.data?.logs?.data">
+                <ng-container *ngIf="isLoading === false; else loading">
+                    <ng-container *ngIf="auditLogList?.data?.logs?.total > 0; else noAuditLogs">
+                        <div class="pb-1 mb-2" *ngFor="let log of auditLogList?.data?.logs?.data">
                             <div
                                 class="float-right"
                                 [ngClass]="{'badge-success': log.log_type == 1, 'badge-info': log.log_type == 2}"
@@ -31,9 +31,10 @@
                         </div>
 
                         <app-pagination
-                            [currentPageIndex]="logs?.data?.logs?.current_page"
-                            [lastPageIndex]="logs?.data?.logs?.last_page"
-                            [pageLinks]="logs?.data?.logs?.links"
+                            [baseUrl]="'/'"
+                            [currentPageIndex]="auditLogList?.data?.logs?.current_page"
+                            [lastPageIndex]="auditLogList?.data?.logs?.last_page"
+                            [pageLinks]="auditLogList?.data?.logs?.links"
                         ></app-pagination>
                     </ng-container>
 

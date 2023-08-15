@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
     standalone: true,
 })
 export class PaginationComponent {
+    @Input() baseUrl = '';
     @Input() currentPageIndex = 0;
     @Input() lastPageIndex = 0;
     @Input() pageLinks: ILink[];
@@ -29,9 +30,8 @@ export class PaginationComponent {
     }
 
     paginate(link: ILink) {
-        console.log(link);
         const pageIndex = this.getPageIndexFromPaginationUrl(link.url);
-        this.router.navigate(['/ip-addresses'], {queryParams: {page: pageIndex}});
+        this.router.navigate([this.baseUrl], {queryParams: {page: pageIndex}});
     }
 }
 

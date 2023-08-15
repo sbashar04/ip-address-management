@@ -8,7 +8,10 @@ import { IIpAddressList, ISingleIp } from 'src/app/modules/ip-address/ip-address
 })
 export class StorageService {
 
-  auditLogs: IAuditLog;
+  auditLog: AuditLogStore = {
+    list: null,
+    selectedPageIndex: null,
+  };
 
   ipAddress: IpAddressStore = {
     list: null,
@@ -48,11 +51,19 @@ export class StorageService {
    * Audit Logs
    */
   setAuditLogs (auditLogs: IAuditLog) {
-    this.auditLogs = auditLogs;
+    this.auditLog.list = auditLogs;
   }
 
   getAuditLogs(): Observable<IAuditLog> {
-    return of(this.auditLogs);
+    return of(this.auditLog.list);
+  }
+
+  setAuditSelectedPageIndex (index: number) {
+    this.auditLog.selectedPageIndex = index;
+  }
+
+  getAuditLogSelectedPageIndex(): number | null {
+    return this.auditLog.selectedPageIndex;
   }
 
 }
@@ -60,5 +71,10 @@ export class StorageService {
 interface IpAddressStore {
   list: IIpAddressList,
   selectedIp: ISingleIp,
+  selectedPageIndex: number,
+}
+
+interface AuditLogStore {
+  list: IAuditLog,
   selectedPageIndex: number,
 }

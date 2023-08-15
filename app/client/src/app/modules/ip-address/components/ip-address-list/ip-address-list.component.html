@@ -19,7 +19,7 @@
                 </h4>
             </div>
             <div class="card-body collapse show">
-                <ng-container  *ngIf="isLoading === false; else loading">
+                <ng-container *ngIf="isLoading === false; else loading">
 
                     <div class="data-wrapper" *ngIf="ipAddressList?.data?.ip_addresses?.total > 0; else noIpAddressFoundBlock">
                         <table class="table table-responsive table-hover">
@@ -49,6 +49,7 @@
                         </table>
 
                         <app-pagination
+                            [baseUrl]="'/ip-addresses'"
                             [currentPageIndex]="ipAddressList?.data?.ip_addresses?.current_page"
                             [lastPageIndex]="ipAddressList?.data?.ip_addresses?.last_page"
                             [pageLinks]="ipAddressList?.data?.ip_addresses?.links"

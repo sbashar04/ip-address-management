@@ -13,7 +13,7 @@ export class AuditLogService {
     private http: HttpClient,
   ) { }
 
-  getLogs(): Observable<IAuditLog> {
-    return this.http.get<IAuditLog>(ApiEndpoints.LOGS);
+  getLogs(page: number): Observable<IAuditLog> {
+    return this.http.get<IAuditLog>(`${ApiEndpoints.LOGS}?page=${page}`);
   }
 }
