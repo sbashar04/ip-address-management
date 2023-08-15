@@ -1,4 +1,4 @@
-<nav>
+<nav *ngIf="pageLinks">
     <ul class="pagination justify-content-center">
       <ng-container *ngFor="let link of pageLinks">
         <li class="page-item" [ngClass]="{

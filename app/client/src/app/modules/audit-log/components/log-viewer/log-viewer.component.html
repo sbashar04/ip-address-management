@@ -29,6 +29,12 @@
                             </p>
                             <small class="text-muted">Created by: <span class="text-dark">{{ log.user.name }}</span> at {{ log.created_at | date: 'MMM d, y, h:mm:ss a'}}.</small>
                         </div>
+
+                        <app-pagination
+                            [currentPageIndex]="logs?.data?.logs?.current_page"
+                            [lastPageIndex]="logs?.data?.logs?.last_page"
+                            [pageLinks]="logs?.data?.logs?.links"
+                        ></app-pagination>
                     </ng-container>
 
                     <ng-template #noAuditLogs>
