@@ -50,7 +50,12 @@ export class IpAddressCreateComponent {
             icon: 'success',
             confirmButtonText: 'OKAY'
           }).then(() => {
-            this.router.navigate(['/ip-addresses']);
+            const pageIndex = this.storageService.getSelectedPageIndex();
+            if(pageIndex > 1) {
+              this.router.navigate(['/ip-addresses'], {queryParams: {page: pageIndex}});
+            }else{
+              this.router.navigate(['/ip-addresses']);
+            }
           });
         },
         error: ({error}) => {
