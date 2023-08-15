@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IpAddressService } from '../../services/ip-address.service';
-import { Observable, finalize } from 'rxjs';
+import { Observable, Subscription, finalize } from 'rxjs';
 import { SubSink } from 'subsink';
 import { IIpAddressList, ISingleIp } from '../../ip-address.models';
 import { StorageService } from 'src/app/services/storage/storage.service';
@@ -18,33 +18,68 @@ export class IpAddressListComponent implements OnInit, OnDestroy {
   ipAddresses$: Observable<IIpAddressList>;
   ipAddressList: IIpAddressList = null;
   subscriptions = new SubSink();
+  ipAddressSubscription = new Subscription;
+  currentPageIndex = 1;
 
   constructor(
     private router: Router,
     private ipAddressService: IpAddressService,
     private storageService: StorageService,
+    private route: ActivatedRoute,
   ){
 
   }
 
   ngOnInit(): void {
-    this.isLoading = true;
+    this.subscriptions.sink = this.route.queryParams.subscribe(queryParams => {
+      if(queryParams['page']){
+        this.isLoading = true;
 
-    if(this.storageService.ipAddresses) {
-      this.ipAddresses$ = this.storageService.getIpAddresses();
-    }else{
-      this.ipAddresses$ = this.ipAddressService.getIpAddresses();
-    }
+        if(this.storageService.ipAddresses && this.currentPageIndex === queryParams['page']) {
+          this.ipAddresses$ = this.storageService.getIpAddresses();
+        }else{
+          this.currentPageIndex = queryParams['page'];
+          this.storageService.setIpAddresses(null);
+          this.ipAddresses$ = this.ipAddressService.getIpAddresses(this.currentPageIndex);
+        }
 
-    this.subscriptions.sink = this.ipAddresses$.pipe(finalize(() => this.isLoading = false)).subscribe({
-      next: response => {
-        this.ipAddressList = response;
-        this.storageService.setIpAddresses(this.ipAddressList);
-      },
-      error: ({error}) => {
-        this.errors = error?.errors;
+        if(this.ipAddressSubscription){
+          this.ipAddressSubscription.unsubscribe();
+        }
+
+        this.ipAddressSubscription = this.ipAddresses$.pipe(finalize(() => this.isLoading = false)).subscribe({
+          next: response => {
+            this.ipAddressList = response;
+            this.storageService.setIpAddresses(this.ipAddressList);
+          },
+          error: ({error}) => {
+            this.errors = error?.errors;
+          }
+        });
+      }else{
+        this.isLoading = true;
+        if(this.storageService.ipAddresses) {
+          this.ipAddresses$ = this.storageService.getIpAddresses();
+        }else{
+          this.ipAddresses$ = this.ipAddressService.getIpAddresses(this.currentPageIndex);
+        }
+
+        if(this.ipAddressSubscription){
+          this.ipAddressSubscription.unsubscribe();
+        }
+
+        this.ipAddressSubscription = this.ipAddresses$.pipe(finalize(() => this.isLoading = false)).subscribe({
+          next: response => {
+            this.ipAddressList = response;
+            this.storageService.setIpAddresses(this.ipAddressList);
+          },
+          error: ({error}) => {
+            this.errors = error?.errors;
+          }
+        });
       }
     });
+
   }
 
   goToNewIpForm() {
@@ -57,5 +92,6 @@ export class IpAddressListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+    this.ipAddressSubscription.unsubscribe();
   }
 }

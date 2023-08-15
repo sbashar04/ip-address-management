@@ -13,8 +13,8 @@ export class IpAddressService {
     private http: HttpClient,
   ) { }
 
-  getIpAddresses(): Observable<IIpAddressList> {
-    return this.http.get<IIpAddressList>(ApiEndpoints.IP_ADDRESS);
+  getIpAddresses(pageIndex: number): Observable<IIpAddressList> {
+    return this.http.get<IIpAddressList>(`${ApiEndpoints.IP_ADDRESS}?page=${pageIndex}`);
   }
 
   createIp(model: IIPRequest): Observable<IIPResponse> {

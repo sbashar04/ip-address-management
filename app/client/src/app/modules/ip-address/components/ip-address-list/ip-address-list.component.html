@@ -20,34 +20,40 @@
             </div>
             <div class="card-body collapse show">
                 <ng-container  *ngIf="isLoading === false; else loading">
-                    <table
-                        class="table table-responsive table-hover"
-                        *ngIf="ipAddressList?.data?.ip_addresses?.total > 0; else noIpAddressFoundBlock"
-                    >
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>IP Address</th>
-                                <th>Label</th>
-                                <th>Date Created</th>
-                                <th>Modified</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
 
-                        <tbody>
-                            <tr *ngFor="let ip of ipAddressList?.data?.ip_addresses?.data">
-                                <td>{{ ip.id }}</td>
-                                <td>{{ ip.ip_address }}</td>
-                                <td>{{ ip.label }}</td>
-                                <td>{{ ip.created_at }}</td>
-                                <td>{{ ip.updated_at }}</td>
-                                <td>
-                                    <a [routerLink]="['/ip-addresses/edit', ip.id]" (click)="setSelectedIpAddress(ip)" class="btn btn-info">Edit <i class="fa fa-edit"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="data-wrapper" *ngIf="ipAddressList?.data?.ip_addresses?.total > 0; else noIpAddressFoundBlock">
+                        <table class="table table-responsive table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>IP Address</th>
+                                    <th>Label</th>
+                                    <th>Date Created</th>
+                                    <th>Modified</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let ip of ipAddressList?.data?.ip_addresses?.data">
+                                    <td>{{ ip.id }}</td>
+                                    <td>{{ ip.ip_address }}</td>
+                                    <td>{{ ip.label }}</td>
+                                    <td>{{ ip.created_at }}</td>
+                                    <td>{{ ip.updated_at }}</td>
+                                    <td>
+                                        <a [routerLink]="['/ip-addresses/edit', ip.id]" (click)="setSelectedIpAddress(ip)" class="btn btn-info">Edit <i class="fa fa-edit"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <app-pagination
+                            [currentPageIndex]="ipAddressList?.data?.ip_addresses?.current_page"
+                            [lastPageIndex]="ipAddressList?.data?.ip_addresses?.last_page"
+                            [pageLinks]="ipAddressList?.data?.ip_addresses?.links"
+                        ></app-pagination>
+                    </div>
 
                     <ng-template #noIpAddressFoundBlock>
                         <div class="text-left">

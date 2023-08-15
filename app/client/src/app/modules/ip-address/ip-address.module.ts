@@ -6,6 +6,7 @@ import { IpAddressEditComponent } from './components/ip-address-edit/ip-address-
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormErrorComponent } from 'src/app/components/form-error/form-error.component';
+import { PaginationComponent } from 'src/app/components/pagination/pagination.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ReactiveFormsModule,
     FormErrorComponent,
+    PaginationComponent,
   ]
 })
 export class IpAddressModule { }

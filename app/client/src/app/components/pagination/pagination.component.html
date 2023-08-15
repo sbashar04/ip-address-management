@@ -1,0 +1,11 @@
+<nav>
+    <ul class="pagination justify-content-center">
+      <ng-container *ngFor="let link of pageLinks">
+        <li class="page-item" [ngClass]="{
+          'disabled': link.active || link.url === null
+        }">
+          <button type="button" class="page-link" (click)="paginate(link)" [innerHTML]="link.label"></button>
+        </li>
+      </ng-container>
+    </ul>
+</nav>
