@@ -18,9 +18,16 @@ class IpAddressController extends Controller
     public function index()
     {
         $response = ['success' => false];
-        $ip_addresses = IpAddress::orderBy('id', 'desc')->paginate(20);
-        $response['data']['ip_addresses'] = $ip_addresses;
-        return response()->json($response);
+        try {
+            $ip_addresses = IpAddress::orderBy('id', 'desc')->paginate(20);
+            $response['success'] = true;
+            $response['data']['ip_addresses'] = $ip_addresses;
+            return response()->json($response);
+        } catch (\Exception $e) {
+            Log::info($e->getMessage());
+            $response['errors']['message'] = 'Server error occurred';
+            return response()->json($response, 422);
+        }
     }
 
     /**
@@ -82,7 +89,14 @@ class IpAddressController extends Controller
      */
     public function show(IpAddress $ipAddress)
     {
-        //
+        $response = ['success' => false];
+        try {
+            return response()->json($ipAddress);
+        } catch (\Exception $e) {
+            Log::info($e->getMessage());
+            $response['errors']['message'] = 'Server error occurred';
+            return response()->json($response, 422);
+        }
     }
 
     /**
