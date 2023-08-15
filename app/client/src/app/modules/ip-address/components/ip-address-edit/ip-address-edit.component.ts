@@ -6,6 +6,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { ISingleIp } from '../../ip-address.models';
 import { Observable, finalize } from 'rxjs';
 import { SubSink } from 'subsink';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ip-address-edit',
@@ -64,8 +65,14 @@ export class IpAddressEditComponent implements OnInit, OnDestroy {
         next: response => {
           this.storageService.setIpAddresses(null);
           this.storageService.setSelectedIpAddress(null);
-          this.storageService.isIpAddressUpdated = true;
-          this.router.navigate(['/ip-addresses']);
+          Swal.fire({
+            title: 'Success!',
+            text: 'IP Address has been updated successfully.',
+            icon: 'success',
+            confirmButtonText: 'OKAY'
+          }).then(() => {
+            this.router.navigate(['/ip-addresses']);
+          });
         },
         error: ({error}) => {
           this.errors = error?.errors;

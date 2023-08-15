@@ -11,8 +11,6 @@ export class StorageService {
   ipAddresses: IIpAddressList;
   auditLogs: IAuditLog;
   selectedIpAddress: ISingleIp;
-  isIpAddressUpdated = false;
-  isIpAddressCreated = false;
 
   constructor() { }
 

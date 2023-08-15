@@ -18,8 +18,6 @@ export class IpAddressListComponent implements OnInit, OnDestroy {
   ipAddresses$: Observable<IIpAddressList>;
   ipAddressList: IIpAddressList = null;
   subscriptions = new SubSink();
-  isIpAddressUpdated = false;
-  isIpAddressCreated = false;
 
   constructor(
     private router: Router,
@@ -31,11 +29,6 @@ export class IpAddressListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoading = true;
-
-    this.isIpAddressUpdated = this.storageService.isIpAddressUpdated;
-    this.isIpAddressCreated = this.storageService.isIpAddressCreated;
-    this.storageService.isIpAddressCreated = false;
-    this.storageService.isIpAddressUpdated = false;
 
     if(this.storageService.ipAddresses) {
       this.ipAddresses$ = this.storageService.getIpAddresses();

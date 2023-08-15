@@ -5,6 +5,7 @@ import { IpAddressService } from '../../services/ip-address.service';
 import { finalize } from 'rxjs';
 import { IIPError } from '../../ip-address.models';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-ip-address-create',
@@ -43,9 +44,14 @@ export class IpAddressCreateComponent {
       .pipe(finalize(() => this.submitting = false))
       .subscribe({
         next: response => {
-          this.storageService.isIpAddressCreated = true;
-          sessionStorage.setItem('ip_address', JSON.stringify(response.data.ip_address));
-          this.router.navigate(['/ip-addresses']);
+          Swal.fire({
+            title: 'Success!',
+            text: 'IP Address has been created successfully.',
+            icon: 'success',
+            confirmButtonText: 'OKAY'
+          }).then(() => {
+            this.router.navigate(['/ip-addresses']);
+          });
         },
         error: ({error}) => {
           this.errors = error?.errors;
