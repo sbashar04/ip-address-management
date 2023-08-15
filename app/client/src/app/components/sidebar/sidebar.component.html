@@ -8,7 +8,7 @@
                 <li [class.active]="currentUrlPath ==='/'">
                     <a routerLink="/"><i class="fa fa-tachometer"></i> <span>Audit Log</span></a>
                 </li>
-                <li [class.active]="currentUrlPath ==='/ip-addresses'">
+                <li [class.active]="currentUrlPath.indexOf('/ip-addresses') > -1">
                     <a routerLink="/ip-addresses"><i class="fa fa-object-group"></i> <span>IP Address</span></a>
                 </li>
             </ul>
