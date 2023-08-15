@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IpAddressService } from '../../services/ip-address.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { ISingleIp } from '../../ip-address.models';
 import { Observable, finalize } from 'rxjs';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-ip-address-edit',
   templateUrl: './ip-address-edit.component.html',
   styleUrls: ['./ip-address-edit.component.scss']
 })
-export class IpAddressEditComponent implements OnInit {
+export class IpAddressEditComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   id: number;
@@ -19,6 +20,7 @@ export class IpAddressEditComponent implements OnInit {
   submitting = false;
   loading = false;
   errors: any;
+  subscriptions = new SubSink();
 
   constructor(
     private router: Router,
@@ -42,7 +44,7 @@ export class IpAddressEditComponent implements OnInit {
       this.ipAddress$ = this.ipAddressService.getSingleIp(this.id);
     }
 
-    this.ipAddress$.subscribe(result => {
+    this.subscriptions.sink = this.ipAddress$.subscribe(result => {
       this.loading = false;
       if(result){
         this.form.get('label').setValue(result?.label);
@@ -70,6 +72,10 @@ export class IpAddressEditComponent implements OnInit {
         }
       });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
 }

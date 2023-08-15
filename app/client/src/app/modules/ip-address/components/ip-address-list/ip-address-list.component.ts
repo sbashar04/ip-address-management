@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { IpAddressService } from '../../services/ip-address.service';
 import { Observable, finalize } from 'rxjs';
 import { SubSink } from 'subsink';
-import { IIPError, IIpAddressList, ISingleIp } from '../../ip-address.models';
+import { IIpAddressList, ISingleIp } from '../../ip-address.models';
 import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
@@ -40,7 +40,7 @@ export class IpAddressListComponent implements OnInit, OnDestroy {
       this.ipAddresses$ = this.ipAddressService.getIpAddresses();
     }
 
-    this.ipAddresses$.pipe(finalize(() => this.isLoading = false)).subscribe({
+    this.subscriptions.sink = this.ipAddresses$.pipe(finalize(() => this.isLoading = false)).subscribe({
       next: response => {
         this.ipAddressList = response;
         this.storageService.setIpAddresses(this.ipAddressList);
@@ -55,11 +55,11 @@ export class IpAddressListComponent implements OnInit, OnDestroy {
     this.router.navigate(['ip-addresses/create']);
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
-  }
-
   setSelectedIpAddress(ipAddress: ISingleIp) {
     this.storageService.setSelectedIpAddress(ipAddress);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }

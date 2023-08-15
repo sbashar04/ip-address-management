@@ -27,8 +27,8 @@ export class StorageService {
     this.auditLogs = auditLogs;
   }
 
-  getAuditLogs(): IAuditLog {
-    return this.auditLogs;
+  getAuditLogs(): Observable<IAuditLog> {
+    return of(this.auditLogs);
   }
 
   setSelectedIpAddress (selectedIpAddress: ISingleIp) {
