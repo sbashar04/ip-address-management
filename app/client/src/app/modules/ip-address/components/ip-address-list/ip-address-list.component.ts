@@ -25,6 +25,7 @@ export class IpAddressListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.ipAddressService.getIpAddresses()
     .pipe(finalize(() => this.isLoading = false))
     .subscribe({

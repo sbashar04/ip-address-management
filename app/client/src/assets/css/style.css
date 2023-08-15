@@ -5314,7 +5314,7 @@ button:active {
 
 .badge-primary {
 	padding: 1px 6px;
-	font-size: 9px;
+	font-size: 14px;
 	line-height: normal;
 	border-radius: 3px;
 	border: 1px solid #0a8fa5;
@@ -5322,7 +5322,7 @@ button:active {
 
 .badge-secondary {
 	padding: 1px 6px;
-	font-size: 9px;
+	font-size: 14px;
 	line-height: normal;
 	border-radius: 3px;
 	border: 1px solid #727575;
@@ -5330,7 +5330,7 @@ button:active {
 
 .badge-success {
 	padding: 1px 6px;
-	font-size: 9px;
+	font-size: 14px;
 	line-height: normal;
 	border-radius: 3px;
 	border: 1px solid #2dbd4e;
@@ -5346,7 +5346,7 @@ button:active {
 
 .badge-info {
 	padding: 1px 6px;
-	font-size: 9px;
+	font-size: 14px;
 	line-height: normal;
 	border-radius: 3px;
 	border: 1px solid #306aca;
