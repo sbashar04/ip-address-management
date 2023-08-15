@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IpAddressService } from '../../services/ip-address.service';
-import { finalize } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
 import { SubSink } from 'subsink';
-import { IIpAddressList } from '../../ip-address.models';
+import { IIPError, IIpAddressList, ISingleIp } from '../../ip-address.models';
+import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
   selector: 'app-ip-address-list',
@@ -14,27 +15,37 @@ export class IpAddressListComponent implements OnInit, OnDestroy {
 
   isLoading = false;
   errors: any = null;
-  ipAddresses: IIpAddressList = null;
+  ipAddresses$: Observable<IIpAddressList>;
+  ipAddressList: IIpAddressList = null;
   subscriptions = new SubSink();
+  isIpAddressUpdated = false;
 
   constructor(
     private router: Router,
     private ipAddressService: IpAddressService,
+    private storageService: StorageService,
   ){
 
   }
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.ipAddressService.getIpAddresses()
-    .pipe(finalize(() => this.isLoading = false))
-    .subscribe({
+
+    this.isIpAddressUpdated = this.storageService.isIpAddressUpdated;
+    this.storageService.isIpAddressUpdated = false;
+
+    if(this.storageService.ipAddresses) {
+      this.ipAddresses$ = this.storageService.getIpAddresses();
+    }else{
+      this.ipAddresses$ = this.ipAddressService.getIpAddresses();
+    }
+
+    this.ipAddresses$.pipe(finalize(() => this.isLoading = false)).subscribe({
       next: response => {
-        console.log(response);
-        this.ipAddresses = response;
+        this.ipAddressList = response;
+        this.storageService.setIpAddresses(this.ipAddressList);
       },
       error: ({error}) => {
-        console.log(error);
         this.errors = error?.errors;
       }
     });
@@ -46,5 +57,9 @@ export class IpAddressListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+
+  setSelectedIpAddress(ipAddress: ISingleIp) {
+    this.storageService.setSelectedIpAddress(ipAddress);
   }
 }

@@ -7,6 +7,14 @@
     </div>
 </div>
 
+<div class="row" *ngIf="isIpAddressUpdated">
+    <div class="col-md-12">
+        <div class="alter alert-success p-3">
+            IP Address has been updated successfully.
+        </div>
+    </div>
+</div>
+
 
 <div class="row clearfix">
     <div class="col-md-12 col-lg-12 col-xl-12">
@@ -23,7 +31,7 @@
                 <ng-container  *ngIf="isLoading === false; else loading">
                     <table
                         class="table table-responsive table-hover"
-                        *ngIf="ipAddresses?.data?.ip_addresses?.total > 0; else noIpAddressFoundBlock"
+                        *ngIf="ipAddressList?.data?.ip_addresses?.total > 0; else noIpAddressFoundBlock"
                     >
                         <thead>
                             <tr>
@@ -37,14 +45,14 @@
                         </thead>
 
                         <tbody>
-                            <tr *ngFor="let ip of ipAddresses?.data?.ip_addresses?.data">
+                            <tr *ngFor="let ip of ipAddressList?.data?.ip_addresses?.data">
                                 <td>{{ ip.id }}</td>
                                 <td>{{ ip.ip_address }}</td>
                                 <td>{{ ip.label }}</td>
                                 <td>{{ ip.created_at }}</td>
                                 <td>{{ ip.updated_at }}</td>
                                 <td>
-                                    <a [routerLink]="['/ip-addresses', ip.id]" class="btn btn-info">Edit <i class="fa fa-edit"></i></a>
+                                    <a [routerLink]="['/ip-addresses/edit', ip.id]" (click)="setSelectedIpAddress(ip)" class="btn btn-info">Edit <i class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
                         </tbody>

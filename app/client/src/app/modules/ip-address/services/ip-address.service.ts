@@ -14,11 +14,19 @@ export class IpAddressService {
   ) { }
 
   getIpAddresses(): Observable<IIpAddressList> {
-    return this.http.get<IIpAddressList>(ApiEndpoints.IP_ADDRESS_LIST);
+    return this.http.get<IIpAddressList>(ApiEndpoints.IP_ADDRESS);
   }
 
   createIp(model: IIPRequest): Observable<IIPResponse> {
-    return this.http.post<IIPResponse>(ApiEndpoints.CREATE_IP, model);
+    return this.http.post<IIPResponse>(ApiEndpoints.IP_ADDRESS, model);
+  }
+
+  getSingleIp(id: number): Observable<any> {
+    return this.http.get<any>(`${ApiEndpoints.IP_ADDRESS}/${id}`);
+  }
+
+  updateIp(model: IIPRequest, id: number): Observable<IIPResponse> {
+    return this.http.patch<IIPResponse>(`${ApiEndpoints.IP_ADDRESS}/${id}`, model);
   }
 
 }
