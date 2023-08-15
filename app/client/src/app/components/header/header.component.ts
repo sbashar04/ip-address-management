@@ -14,17 +14,21 @@ import Swal from 'sweetalert2';
 })
 export class HeaderComponent {
 
+  user: any;
+
   constructor(
     private router: Router,
     private authService: AuthService,
     private sharedService: SharedService,
-  ) {}
+  ) {
+    this.user = this.authService.getUser();
+  }
 
   async logout(){
     Swal.fire({
       title: 'Please Wait!',
       text: 'We are logging you out.',
-      icon: 'success',
+      imageUrl: 'assets/images/icon/loading-buffering.gif',
       showConfirmButton: false
     });
 
