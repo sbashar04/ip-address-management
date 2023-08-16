@@ -3,7 +3,7 @@ IP Address Management Solution is an application where you can manage a list of 
 
 ## Information
 
-This application is developed on Windows 11 by creating necessary environment using `Docker`.
+This application is developed on Windows 11 by creating necessary environment using `Docker`. So you need the Docker to be installed in your machine.
 
 ## Features
 
@@ -91,6 +91,7 @@ This application is developed on Windows 11 by creating necessary environment us
     ```bash
     npm start
     ```
+14. Go to <http://localhost:4200> on browser to see the changes.
 
 # Contact
 
