@@ -26,4 +26,13 @@ describe('IpAddressEditComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('IP Address can not be edited', () => {
+    expect(component.form.get('ip_address') === null).toBeTruthy();
+  });
+
+  it('Label can be edited', () => {
+    expect(component.form.get('label')).toBeTruthy();
+  });
+
 });

@@ -28,4 +28,13 @@ describe('IpAddressCreateComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('IP Address Form control exists', () => {
+    expect(component.form.get('ip_address')).toBeTruthy();
+  });
+
+  it('Lable Form control exists', () => {
+    expect(component.form.get('label')).toBeTruthy();
+  });
+
 });
