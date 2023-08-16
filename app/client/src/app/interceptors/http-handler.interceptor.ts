@@ -51,8 +51,11 @@ export class HttpHandlerInterceptor implements HttpInterceptor {
         next: (event) => {
           if (event instanceof HttpResponse) {
             if (event.status == 401) {
-              this.authService.logout();
-              this.router.navigate(['login']);
+              this.authService.logout().subscribe(result => {
+                if('success' in result && result.success === true) {
+                  this.authService.finalizeLogout();
+                }
+              });
 
               Swal.fire({
                 title: 'Warning!',
@@ -68,7 +71,11 @@ export class HttpHandlerInterceptor implements HttpInterceptor {
         },
         error: (error) => {
           if(error.status === 401) {
-            this.authService.logout();
+            this.authService.logout().subscribe(result => {
+              if('success' in result && result.success === true) {
+                this.authService.finalizeLogout();
+              }
+            });
             Swal.fire({
               title: 'Warning!',
               text: 'Authorization Error. Login first.',
@@ -78,7 +85,7 @@ export class HttpHandlerInterceptor implements HttpInterceptor {
               this.router.navigate(['login']);
             });
           } else if(error.status === 404) {
-            alert('Page Not Found!')
+            alert('Page Not Found!');
           }
         }
       })

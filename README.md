@@ -49,73 +49,80 @@ This application is developed on Windows 11 by creating necessary environment us
 
 6. Confirm that a database named `ip_address_management` is created.
 
-7. Copy laravel environment file from `app/server/.env.example` to `app/server/.env`. Necessary changes is already there for local test environment.
+7. Add this two lines in you hosts file
+
+    ```bash
+    127.0.0.1 ipamapi.test
+    127.0.0.1 ipam.test
+    ```
+
+8. Copy laravel environment file from `app/server/.env.example` to `app/server/.env`. Necessary changes is already there for local test environment.
 
     ```bash
     cp app/server/.env.example app/server/.env
     ```
 
-8. To run migrations in laravel project, enter into the docker PHP image by running the command bellow.
+9. To run migrations in laravel project, enter into the docker PHP image by running the command bellow.
 
     ```bash
     docker exec -it ipam_php bash
     ```
 
-9. Inside docker PHP image, Run `composer install` command
+10. Inside docker PHP image, Run `composer install` command
 
     ```bash
     composer install
     ````
 
-10. Inside docker PHP image, Run `php artisan key:generate` command to generate laravel application key
+11. Inside docker PHP image, Run `php artisan key:generate` command to generate laravel application key
 
     ```bash
     php artisan key:generate
     ````
 
-11. Inside docker PHP image, run `php artisan migrate`
+12. Inside docker PHP image, run `php artisan migrate`
 
     ```bash
     php artisan migrate
     ```
 
-12. Inside docker PHP image, run `php artisan passport:install` for creating passport auth private and public keys
+13. Inside docker PHP image, run `php artisan passport:install` for creating passport auth private and public keys
 
     ```bash
     php artisan passport:install
     ```
 
-13. Create an user by running
+14. Create an user by running
 
     ```bash
     php artisan db:seed --class=UserSeeder
     ```
 
-14. Go to <http://ipam.test> on browser and login to IP Address Management
+15. Go to <http://ipam.test> on browser and login to IP Address Management
 
     ```bash
     Username: admin@ipam.test
     Password: admin1234
     ```
 
-15. To create some dummy data, run `php artisan db:seed`
+16. To create some dummy data, run `php artisan db:seed`
 
     ```bash
     php artisan db:seed
     ```
 
-16. To make modifications in the frontend application, access to the angular docker image by running
+17. To make modifications in the frontend application, access to the angular docker image by running
 
     ```bash
     docker exec -it ipam_angular //bin//sh
     ```
 
-17. To run angular local server
+18. To run angular local server
 
     ```bash
     npm start
     ```
-18. Go to <http://localhost:4200> on browser to see the changes.
+19. Go to <http://localhost:4200> on browser to see the changes.
 
 ## Contact
 

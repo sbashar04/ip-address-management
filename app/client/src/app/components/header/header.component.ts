@@ -24,7 +24,7 @@ export class HeaderComponent {
     this.user = this.authService.getUser();
   }
 
-  async logout(){
+  logout(){
     Swal.fire({
       title: 'Please Wait!',
       text: 'We are logging you out.',
@@ -34,9 +34,7 @@ export class HeaderComponent {
 
     this.authService.logout().subscribe(result => {
       if('success' in result && result.success === true) {
-        localStorage.removeItem('remember');
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        this.authService.finalizeLogout();
         Swal.close();
         this.router.navigate(['login']);
       }
