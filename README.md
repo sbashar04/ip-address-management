@@ -79,33 +79,45 @@ This application is developed on Windows 11 by creating necessary environment us
     php artisan migrate
     ```
 
-12. Create an user by running
+12. Inside docker PHP image, run `php artisan passport:install` for creating passport auth private and public keys
+
+    ```bash
+    php artisan passport:install
+    ```
+
+13. Create an user by running
 
     ```bash
     php artisan db:seed --class=UserSeeder
     ```
 
-13. Go to <http://ipam.test> on browser and login to IP Address Management
+14. Go to <http://ipam.test> on browser and login to IP Address Management
 
     ```bash
     Username: admin@ipam.test
     Password: admin1234
     ```
 
-14. To make modifications in the frontend application, access to the docker image by running
+15. To create some dummy data, run `php artisan db:seed`
 
     ```bash
-    docker exec -it ipam_angular //bin//bash
+    php artisan db:seed
     ```
 
-15. To run angular local server
+16. To make modifications in the frontend application, access to the angular docker image by running
+
+    ```bash
+    docker exec -it ipam_angular //bin//sh
+    ```
+
+17. To run angular local server
 
     ```bash
     npm start
     ```
-16. Go to <http://localhost:4200> on browser to see the changes.
+18. Go to <http://localhost:4200> on browser to see the changes.
 
-# Contact
+## Contact
 
     Email: me@shafiulbashar.com OR dshafiul@gmail.com
 
