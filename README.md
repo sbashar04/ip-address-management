@@ -67,37 +67,43 @@ This application is developed on Windows 11 by creating necessary environment us
     composer install
     ````
 
-10. Inside docker PHP image, run `php artisan migrate`
+10. Inside docker PHP image, Run `php artisan key:generate` command to generate laravel application key
+
+    ```bash
+    php artisan key:generate
+    ````
+
+11. Inside docker PHP image, run `php artisan migrate`
 
     ```bash
     php artisan migrate
     ```
 
-10. Create an user by running
+12. Create an user by running
 
     ```bash
     php artisan db:seed --class=UserSeeder
     ```
 
-11. Go to <http://ipam.test> on browser and login to IP Address Management
+13. Go to <http://ipam.test> on browser and login to IP Address Management
 
     ```bash
     Username: admin@ipam.test
     Password: admin1234
     ```
 
-12. To make modifications in the frontend application, access to the docker image by running
+14. To make modifications in the frontend application, access to the docker image by running
 
     ```bash
     docker exec -it ipam_angular //bin//bash
     ```
 
-13. To run angular local server
+15. To run angular local server
 
     ```bash
     npm start
     ```
-14. Go to <http://localhost:4200> on browser to see the changes.
+16. Go to <http://localhost:4200> on browser to see the changes.
 
 # Contact
 

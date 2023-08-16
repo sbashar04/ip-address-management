@@ -4,4 +4,4 @@ RUN mkdir -p $HOME
 WORKDIR $HOME
 RUN npm install -g @angular/cli
 EXPOSE 4200
-CMD [ "ng", "build" ]
+CMD [ "npm", "install" ]

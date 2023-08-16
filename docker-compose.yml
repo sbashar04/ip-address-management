@@ -30,6 +30,7 @@ services:
       - ./app/client:/usr/src/app
     networks:
       - frontend
+    command: sh -c "npm run build"
 
   php:
     build: ./docker/php/${PHP_VERSION}

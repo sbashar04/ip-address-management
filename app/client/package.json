@@ -20,6 +20,8 @@
     "@angular/router": "^15.1.0",
     "@fortawesome/fontawesome-free": "^6.4.2",
     "bootstrap": "^5.3.1",
+    "build": "^0.1.4",
+    "ng": "^0.0.0",
     "rxjs": "~7.8.0",
     "subsink": "^1.0.2",
     "sweetalert2": "^11.7.23",
