@@ -130,7 +130,7 @@ This application is developed on Windows 11 by creating necessary environment us
     ```
 19. Go to <http://localhost:4200> on browser to see the changes.
 
-20. To test angular app install the following and run 'npm run test'. Your PC should exists a browser like Chrome.
+20. To test angular app install the following and run `npm run test`. A browser like Chrome should be installed in you PC.
 
     ```bash
     Node: v18.17.0
