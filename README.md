@@ -3,7 +3,7 @@ IP Address Management Solution is an application where you can manage a list of 
 
 ## Information
 
-This application is developed on Windows 11 by creating necessary environment using `Docker`. So you need the Docker to be installed in your machine.
+This application is developed on Windows 11 by creating necessary environment using `Docker`. So you need the Docker to be installed and running in your machine.
 
 ## Features
 
@@ -61,7 +61,13 @@ This application is developed on Windows 11 by creating necessary environment us
     docker exec -it ipam_php bash
     ```
 
-9. If you are able to enter into the docker PHP image, then run
+9. Inside docker PHP image, Run `composer install` command
+
+    ```bash
+    composer install
+    ````
+
+10. Inside docker PHP image, run `php artisan migrate`
 
     ```bash
     php artisan migrate
