@@ -29,7 +29,8 @@ export class HeaderComponent {
       title: 'Please Wait!',
       text: 'We are logging you out.',
       imageUrl: 'assets/images/icon/loading-buffering.gif',
-      showConfirmButton: false
+      showConfirmButton: false,
+      allowOutsideClick: false,
     });
 
     this.authService.logout().subscribe(result => {

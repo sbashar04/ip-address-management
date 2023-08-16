@@ -111,7 +111,13 @@ This application is developed on Windows 11 by creating necessary environment us
     php artisan db:seed
     ```
 
-17. To make modifications in the frontend application, access to the angular docker image by running
+16. Restart nginx docker image
+
+    ```bash
+    docker restart ipam_nginx
+    ```
+
+17. To make modifications in the frontend application, open another terminal inside `ip-address-management` directory and run the command to access to the angular docker image
 
     ```bash
     docker exec -it ipam_angular //bin//sh
@@ -123,6 +129,15 @@ This application is developed on Windows 11 by creating necessary environment us
     npm start
     ```
 19. Go to <http://localhost:4200> on browser to see the changes.
+
+20. To test angular app install the following and run 'npm run test'. Your PC should exists a browser like Chrome.
+
+    ```bash
+    Node: v18.17.0
+    NPM: 9.6.7
+    Angular CLI: 15.1.6
+    npm run test
+    ```
 
 ## Contact
 

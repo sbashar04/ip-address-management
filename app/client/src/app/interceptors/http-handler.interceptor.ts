@@ -61,7 +61,8 @@ export class HttpHandlerInterceptor implements HttpInterceptor {
                 title: 'Warning!',
                 text: 'Authorization Error. Login first.',
                 icon: 'error',
-                confirmButtonText: 'Login'
+                confirmButtonText: 'Login',
+                allowOutsideClick: false,
               }).then(() => {
                 this.router.navigate(['login']);
               });
@@ -80,7 +81,8 @@ export class HttpHandlerInterceptor implements HttpInterceptor {
               title: 'Warning!',
               text: 'Authorization Error. Login first.',
               icon: 'error',
-              confirmButtonText: 'Login'
+              confirmButtonText: 'Login',
+              allowOutsideClick: false,
             }).then(() => {
               this.router.navigate(['login']);
             });
